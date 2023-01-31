@@ -50,6 +50,7 @@ public class StackMechanic : MonoSingleton<StackMechanic>
 
     public void ObjectConverter(GameObject obj, int enumStat)
     {
+        print(enumStat);
         obj.transform.GetChild(enumStat - 2).gameObject.SetActive(false);
         obj.transform.GetChild(enumStat - 1).gameObject.SetActive(true);
 
