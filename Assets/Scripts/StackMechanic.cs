@@ -17,7 +17,7 @@ public class StackMechanic : MonoSingleton<StackMechanic>
 
         StackObjects.Add(newObject);
         objectMovements.Add(objectMovement);
-        newObject.transform.position = new Vector3(CharacterManager.Instance.characterObjectPos.transform.position.x, CharacterManager.Instance.characterObjectPos.transform.position.y, CharacterManager.Instance.characterObjectPos.transform.position.z + (StackObjects.Count - 1) * stackDistance);
+        newObject.transform.position = new Vector3(CharacterManager.Instance.characterObjectPos.transform.position.x, CharacterManager.Instance.characterObjectPos.transform.position.y, CharacterManager.Instance.characterObjectPos.transform.position.z - (StackObjects.Count - 1) * stackDistance);
         objectMovement.isCrush = false;
         objectMovement.stackCount = objectMovements.Count - 1;
         StartCoroutine(objectMovement.ObjectMove());
@@ -76,9 +76,10 @@ public class StackMechanic : MonoSingleton<StackMechanic>
     }
     private IEnumerator ObjectScale(GameObject tempObject)
     {
-        tempObject.transform.DOScale(tempObject.transform.localScale * 2, _scaleTime);
+        Vector3 tempScale = tempObject.transform.localScale;
+        tempObject.transform.DOScale(tempObject.transform.localScale * 1.3f, _scaleTime);
         yield return new WaitForSeconds(_scaleTime + _stackDelayTime);
-        tempObject.transform.DOScale(tempObject.transform.localScale / 2, _scaleTime);
+        tempObject.transform.DOScale(tempScale, _scaleTime);
         yield return new WaitForSeconds(_scaleTime + _stackDelayTime);
     }
 }

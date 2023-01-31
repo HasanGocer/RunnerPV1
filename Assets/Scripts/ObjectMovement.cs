@@ -13,9 +13,9 @@ public class ObjectMovement : MonoBehaviour
         while (!isCrush)
         {
             transform.position = new Vector3(
-           Mathf.Lerp(transform.position.x, CharacterManager.Instance.character.transform.position.x, Time.deltaTime),
+           Mathf.Lerp(transform.position.x, CharacterManager.Instance.characterObjectPos.transform.position.x, Time.deltaTime),
              transform.position.y,
-              CharacterManager.Instance.character.transform.position.z + stackCount * StackMechanic.Instance.stackDistance);
+              CharacterManager.Instance.characterObjectPos.transform.position.z + stackCount * StackMechanic.Instance.stackDistance);
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }

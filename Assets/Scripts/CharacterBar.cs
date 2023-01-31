@@ -3,45 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterBar : MonoBehaviour
+public class CharacterBar : MonoSingleton<CharacterBar>
 {
+    public GameObject BarPanel;
     [SerializeField] private Image bar;
-    public bool isLive;
+    [SerializeField] private float nowDistance, maxDistance;
 
-    public void BarUpdate(int max, int count, int down)
+    public void BarUpdate()
     {
-        float nowBar = count / max;
-        float afterBar = (count - down) / max;
-        StartCoroutine(BarUpdateIenumurator(nowBar, afterBar));
+        CharacterManager characterManager = CharacterManager.Instance;
+        maxDistance = Vector3.Distance(characterManager.character.transform.position, characterManager.FinishPos.transform.position);
+
+        StartCoroutine(BarUpdateIenumurator());
     }
 
-    private IEnumerator BarUpdateIenumurator(float start, float finish)
+    private IEnumerator BarUpdateIenumurator()
     {
+        CharacterManager characterManager = CharacterManager.Instance;
         yield return null;
         float temp = 0;
         while (true)
         {
             temp += Time.deltaTime;
-            bar.fillAmount = Mathf.Lerp(start, finish, temp);
+            nowDistance = Vector3.Distance(characterManager.character.transform.position, characterManager.FinishPos.transform.position);
+            bar.fillAmount = Mathf.Lerp(nowDistance, maxDistance, temp);
             yield return new WaitForEndOfFrame();
-            if (bar.fillAmount == finish)
+            if (bar.fillAmount == 1)
             {
-                if (isLive)
-                {
-                    RivalControl();
-                }
-                else
-                {
-                    Buttons.Instance.failPanel.SetActive(true);
-                    MoneySystem.Instance.MoneyTextRevork(GameManager.Instance.addedMoney);
-                }
                 break;
             }
         }
-    }
-
-    private void RivalControl()
-    {
-        //ölüm
     }
 }

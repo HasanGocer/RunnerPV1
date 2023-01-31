@@ -21,8 +21,8 @@ public class Buttons : MonoSingleton<Buttons>
     [SerializeField] private Button _settingBackButton;
     [SerializeField] private Button _soundButton, _vibrationButton;
 
-    public GameObject winPanel, failPanel;
-    [SerializeField] private Button _winPrizeButton, _winEmptyButton, _failButton;
+    public GameObject winPanel;
+    [SerializeField] private Button _winPrizeButton, _winEmptyButton;
 
     public TMP_Text finishGameMoneyText;
 
@@ -76,15 +76,16 @@ public class Buttons : MonoSingleton<Buttons>
         _vibrationButton.onClick.AddListener(VibrationButton);
         _winPrizeButton.onClick.AddListener(() => StartCoroutine(WinPrizeButton()));
         _winEmptyButton.onClick.AddListener(() => StartCoroutine(WinButton()));
-        _failButton.onClick.AddListener(() => StartCoroutine(FailButton()));
         _startButton.onClick.AddListener(StartButton);
     }
 
     private void StartButton()
     {
         _startPanel.SetActive(false);
+        CharacterBar.Instance.BarPanel.SetActive(true);
         GameManager.Instance.enumStat = GameManager.GameStat.start;
 
+        CharacterBar.Instance.BarUpdate();
     }
     private IEnumerator WinButton()
     {
@@ -101,11 +102,6 @@ public class Buttons : MonoSingleton<Buttons>
         BarSystem.Instance.BarStopButton(GameManager.Instance.addedMoney);
         GameManager.Instance.SetLevel();
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(0);
-    }
-    private IEnumerator FailButton()
-    {
-        yield return new WaitForSeconds(1);
         SceneManager.LoadScene(0);
     }
     private void SettingButton()

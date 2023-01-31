@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class CharacterManager : MonoSingleton<CharacterManager>
 {
-    public GameObject character, characterObjectPos;
+    public GameObject character, characterObjectPos, FinishPos;
 }
