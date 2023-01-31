@@ -1,7 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class CharacterControler : MonoBehaviour
+public class CharacterControler : MonoSingleton<CharacterControler>
 {
     [SerializeField] Rigidbody rb;
     private float floorWidth = 2.5f;
@@ -59,6 +59,7 @@ public class CharacterControler : MonoBehaviour
 
     private void Update()
     {
-        InputControl();
+        if (GameManager.Instance.enumStat == GameManager.GameStat.start)
+            InputControl();
     }
 }

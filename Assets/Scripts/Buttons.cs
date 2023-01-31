@@ -83,7 +83,7 @@ public class Buttons : MonoSingleton<Buttons>
     private void StartButton()
     {
         _startPanel.SetActive(false);
-        GameManager.Instance.isStart = true;
+        GameManager.Instance.enumStat = GameManager.GameStat.start;
 
     }
     private IEnumerator WinButton()
@@ -117,7 +117,7 @@ public class Buttons : MonoSingleton<Buttons>
     }
     private void SettingBackButton()
     {
-        if (!GameManager.Instance.isStart)
+        if (GameManager.Instance.enumStat == GameManager.GameStat.intro)
             _startPanel.SetActive(true);
         _settingGame.SetActive(false);
         _settingButton.gameObject.SetActive(true);

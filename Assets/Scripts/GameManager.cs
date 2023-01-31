@@ -6,8 +6,14 @@ public class GameManager : MonoSingleton<GameManager>
 {
     //managerde bulunacak
 
-    public bool isStart;
-    public bool isFinish;
+    public enum GameStat
+    {
+        intro = 0,
+        start = 1,
+        crash = 2,
+        finish = 3
+    }
+    public GameStat enumStat;
 
     public int addedMoney;
     public int level;
