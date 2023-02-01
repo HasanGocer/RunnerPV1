@@ -83,7 +83,6 @@ public class StackMechanic : MonoSingleton<StackMechanic>
             StackObjects.RemoveAt(i);
             objectMovements.RemoveAt(i);
         }
-
     }
 
     private void ObjectThrow(GameObject tempObject)
@@ -93,7 +92,7 @@ public class StackMechanic : MonoSingleton<StackMechanic>
     private IEnumerator ObjectScale(GameObject tempObject)
     {
         Vector3 tempScale = tempObject.transform.localScale;
-        tempObject.transform.DOScale(tempObject.transform.localScale * 1.3f, _scaleTime);
+        tempObject.transform.DOScale(tempObject.transform.localScale * 1.1f, _scaleTime);
         yield return new WaitForSeconds(_scaleTime);
         tempObject.transform.DOScale(tempScale, _scaleTime);
         yield return new WaitForSeconds(_scaleTime);

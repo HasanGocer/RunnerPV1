@@ -9,7 +9,8 @@ public class ObjectTouch : MonoBehaviour
     {
         level1 = 1,
         level2 = 2,
-        level3 = 3
+        level3 = 3,
+        level4 = 4
     }
 
     public PotionStat enumStat = PotionStat.level1;
@@ -22,7 +23,7 @@ public class ObjectTouch : MonoBehaviour
             StartCoroutine(StackMechanic.Instance.AddNewObject(other.gameObject));
         if (other.CompareTag("PConverter") && enumStat == PotionStat.level1)
             StartCoroutine(ConvertObjectBool());
-        if (other.CompareTag("SConverter") && enumStat == PotionStat.level2)
+        if (other.CompareTag("SConverter") && enumStat == PotionStat.level2 || enumStat == PotionStat.level3)
             StartCoroutine(ConvertObjectBool());
         if (other.CompareTag("FinishConverter"))
             StartCoroutine(other.GetComponent<FinishConverterManager>().SellItem(gameObject, (int)enumStat, false));
@@ -45,7 +46,7 @@ public class ObjectTouch : MonoBehaviour
     private IEnumerator ConvertObject()
     {
         Vector3 tempScale = transform.localScale;
-        transform.DOScale(transform.localScale * 1.3f, 0.2f);
+        transform.DOScale(transform.localScale * 1.1f, 0.2f);
         yield return new WaitForSeconds(0.2f);
         transform.DOScale(tempScale, 0.2f);
         yield return new WaitForSeconds(0.2f);

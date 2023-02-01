@@ -9,7 +9,8 @@ public class CharacterTouch : MonoBehaviour
     {
         level1 = 1,
         level2 = 2,
-        level3 = 3
+        level3 = 3,
+        level4 = 4
     }
 
     public PotionStat enumStat = PotionStat.level1;
@@ -27,7 +28,7 @@ public class CharacterTouch : MonoBehaviour
             StartCoroutine(StackMechanic.Instance.AddNewObject(other.gameObject));
         if (other.CompareTag("PConverter") && enumStat == PotionStat.level1)
             StartCoroutine(ConvertObjectBool());
-        if (other.CompareTag("SConverter") && enumStat == PotionStat.level2)
+        if (other.CompareTag("SConverter") && enumStat == PotionStat.level2 || enumStat == PotionStat.level3)
             StartCoroutine(ConvertObjectBool());
         if (other.CompareTag("Crusher"))
             StackMechanic.Instance.CrashAllObjects();
