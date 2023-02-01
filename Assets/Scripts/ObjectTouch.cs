@@ -25,7 +25,7 @@ public class ObjectTouch : MonoBehaviour
             StartCoroutine(ConvertObjectBool());
         if (other.CompareTag("SConverter") && enumStat == PotionStat.level2 || enumStat == PotionStat.level3)
             StartCoroutine(ConvertObjectBool());
-        if (other.CompareTag("FinishConverter"))
+        if (other.CompareTag("FinishConverter") || other.CompareTag("Finish"))
             StartCoroutine(other.GetComponent<FinishConverterManager>().SellItem(gameObject, (int)enumStat, false));
         if (other.CompareTag("Crusher"))
             StackMechanic.Instance.CrashObjects(gameObject, objectMovement);
@@ -40,6 +40,7 @@ public class ObjectTouch : MonoBehaviour
             StartCoroutine(ConvertObject());
             StackMechanic.Instance.ObjectConverter(gameObject, (int)enumStat);
             yield return new WaitForSeconds(0.2f);
+            isConvert = false;
         }
     }
 

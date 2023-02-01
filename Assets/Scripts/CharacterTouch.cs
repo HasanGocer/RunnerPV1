@@ -51,6 +51,7 @@ public class CharacterTouch : MonoBehaviour
             StartCoroutine(ConvertObject());
             StackMechanic.Instance.ObjectConverter(gameObject, (int)enumStat);
             yield return new WaitForSeconds(0.2f);
+            isConvert = false;
         }
     }
     private IEnumerator ConvertObject()

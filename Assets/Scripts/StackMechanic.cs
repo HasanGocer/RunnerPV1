@@ -38,6 +38,7 @@ public class StackMechanic : MonoSingleton<StackMechanic>
         {
             if (tempObject == StackObjects[i])
             {
+                objectMovements[i].isCrush = true;
                 objectMovements.RemoveAt(i);
                 StackObjects.RemoveAt(i);
                 break;
