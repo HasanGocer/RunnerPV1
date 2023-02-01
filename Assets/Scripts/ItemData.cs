@@ -30,6 +30,8 @@ public class ItemData : MonoSingleton<ItemData>
              fieldPrice.objectTypeCount = fieldPrice.objectTypeCount * factor.objectTypeCount;
          }
          */
+
+        FinishSystem.Instance.StartFinish();
     }
 
     /*public void SetObjectTypeCount()
