@@ -21,7 +21,7 @@ public class ObjectTouch : MonoBehaviour
         if (other.CompareTag("Potion"))
         {
             StartCoroutine(StackMechanic.Instance.AddNewObject(gameObject));
-            tag = "Untagged";
+            other.tag = "Untagged";
         }
         if (other.CompareTag("Converter"))
         {
