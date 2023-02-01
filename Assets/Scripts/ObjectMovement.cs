@@ -13,13 +13,14 @@ public class ObjectMovement : MonoBehaviour
         boxCollider.isTrigger = false;
 
         yield return null;
-        while (!isCrush)
+        while (!isCrush && GameManager.Instance.enumStat == GameManager.GameStat.start)
         {
+
             transform.position = new Vector3(
-           Mathf.Lerp(transform.position.x, CharacterManager.Instance.characterObjectPos.transform.position.x, Time.deltaTime),
+           Mathf.Lerp(transform.position.x, StackMechanic.Instance.StackObjects[stackCount - 2].transform.position.x, Time.deltaTime * 12),
              transform.position.y,
               CharacterManager.Instance.characterObjectPos.transform.position.z + stackCount * StackMechanic.Instance.stackDistance);
-            yield return new WaitForSeconds(Time.deltaTime);
+            yield return new WaitForSeconds(Time.deltaTime / 3);
         }
     }
 }
