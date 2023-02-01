@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LiquidMaterial
+  m_Name: LiquidMaterial 1
   m_Shader: {fileID: -6465566751694194690, guid: 4d8c18a46b4336a409f19e08221743d9, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -120,14 +120,14 @@ Material:
     - _WobbleZ: -0.04
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _floatStep: -0.54
+    - _floatStep: -0.2
     - _freshnelPower: -0.14
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FreshnelColor: {r: 0.31132078, g: 0, b: 0.06495207, a: 0}
+    - _FreshnelColor: {r: 1, g: 0.20425339, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _brachColor: {r: 0.6901961, g: 0, b: 0.047058824, a: 0}
-    - _surfaceColor: {r: 0.6901961, g: 0, b: 0.04671305, a: 0}
+    - _brachColor: {r: 1, g: 0, b: 0.06818199, a: 0}
+    - _surfaceColor: {r: 1, g: 0, b: 0.06818199, a: 0}
   m_BuildTextureStacks: []
