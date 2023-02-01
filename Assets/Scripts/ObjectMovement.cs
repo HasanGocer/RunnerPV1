@@ -6,9 +6,12 @@ public class ObjectMovement : MonoBehaviour
 {
     public int stackCount = -1;
     public bool isCrush = false;
+    public BoxCollider boxCollider;
 
     public IEnumerator ObjectMove()
     {
+        boxCollider.isTrigger = false;
+
         yield return null;
         while (!isCrush)
         {

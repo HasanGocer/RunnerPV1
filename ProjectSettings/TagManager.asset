@@ -8,6 +8,8 @@ TagManager:
   - Converter
   - FinishConverter
   - Crusher
+  - PConverter
+  - SConverter
   layers:
   - Default
   - TransparentFX

@@ -13,29 +13,23 @@ public class ObjectTouch : MonoBehaviour
     }
 
     public PotionStat enumStat = PotionStat.level1;
-
+    [SerializeField] private ObjectMovement objectMovement;
     bool isConvert = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Potion"))
-        {
-            StartCoroutine(StackMechanic.Instance.AddNewObject(gameObject));
-            other.tag = "Untagged";
-        }
-        if (other.CompareTag("Converter"))
-        {
+            StartCoroutine(StackMechanic.Instance.AddNewObject(other.gameObject));
+        if (other.CompareTag("PConverter") && enumStat == PotionStat.level1)
             StartCoroutine(ConvertObjectBool());
-        }
-        if (other.CompareTag("FinishConverter") && enumStat != PotionStat.level3)
-        {
-            StackMechanic.Instance.ObjectConverter(gameObject, (int)enumStat);
-        }
+        if (other.CompareTag("SConverter") && enumStat == PotionStat.level2)
+            StartCoroutine(ConvertObjectBool());
+        if (other.CompareTag("FinishConverter"))
+            StartCoroutine(other.GetComponent<FinishConverterManager>().SellItem(gameObject, (int)enumStat, false));
         if (other.CompareTag("Crusher"))
-        {
-            StackMechanic.Instance.CrashObjects(gameObject);
-        }
+            StackMechanic.Instance.CrashObjects(gameObject, objectMovement);
     }
+
     private IEnumerator ConvertObjectBool()
     {
         if (!isConvert)

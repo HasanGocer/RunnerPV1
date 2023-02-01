@@ -4,7 +4,7 @@ using DG.Tweening;
 public class CharacterControler : MonoSingleton<CharacterControler>
 {
     [SerializeField] Rigidbody rb;
-    private float floorWidth = 2.5f;
+    private float floorWidth = 10;
     public float speed = 7.2f;
     private Vector3 moveDirection = new Vector3(0, 0, 1);
     private float lastXDirection;

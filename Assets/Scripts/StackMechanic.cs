@@ -15,11 +15,12 @@ public class StackMechanic : MonoSingleton<StackMechanic>
     {
         ObjectMovement objectMovement = newObject.GetComponent<ObjectMovement>();
 
+        newObject.tag = "Untagged";
         StackObjects.Add(newObject);
         objectMovements.Add(objectMovement);
         newObject.transform.position = new Vector3(CharacterManager.Instance.characterObjectPos.transform.position.x, CharacterManager.Instance.characterObjectPos.transform.position.y, CharacterManager.Instance.characterObjectPos.transform.position.z - (StackObjects.Count - 1) * stackDistance);
         objectMovement.isCrush = false;
-        objectMovement.stackCount = objectMovements.Count - 1;
+        objectMovement.stackCount = objectMovements.Count;
         StartCoroutine(objectMovement.ObjectMove());
 
         foreach (GameObject item in StackObjects)
@@ -29,46 +30,60 @@ public class StackMechanic : MonoSingleton<StackMechanic>
         }
     }
 
-    public void CrashObjects(GameObject tempObject)
+    public void ObjectSeller(GameObject tempObject)
     {
-        bool isCrash = false;
+        int count = StackObjects.Count - 1;
 
-        for (int i = 0; i < StackObjects.Count; i++)
+        for (int i = count; i > 0; i--)
         {
-            if (tempObject == StackObjects[i]) isCrash = true;
-            if (isCrash)
+            if (tempObject == StackObjects[i])
             {
-                ObjectThrow(StackObjects[i]);
-                objectMovements[i].isCrush = true;
-                objectMovements[i].stackCount = -1;
-                StackObjects[i].tag = "Potion";
-                StackObjects.RemoveAt(i);
                 objectMovements.RemoveAt(i);
+                StackObjects.RemoveAt(i);
+                break;
             }
+            objectMovements[i].stackCount = i - 1;
+        }
+    }
+
+    public void CrashObjects(GameObject tempObject, ObjectMovement objectMovement)
+    {
+        objectMovement.boxCollider.isTrigger = true;
+        int count = StackObjects.Count - 1;
+
+        for (int i = count; i > 0; i--)
+        {
+            ObjectThrow(StackObjects[i]);
+            objectMovements[i].isCrush = true;
+            objectMovements[i].stackCount = -1;
+            StackObjects[i].tag = "Potion";
+            StackObjects.RemoveAt(i);
+            objectMovements.RemoveAt(i);
+            if (tempObject == StackObjects[i]) break;
         }
     }
 
     public void ObjectConverter(GameObject obj, int enumStat)
     {
-        print(enumStat);
         obj.transform.GetChild(enumStat - 2).gameObject.SetActive(false);
         obj.transform.GetChild(enumStat - 1).gameObject.SetActive(true);
-
     }
 
-    public void CrashAllObjects(GameObject tempObject)
+    public void CrashAllObjects()
     {
-        for (int i = 0; i < StackObjects.Count; i++)
+        int count = StackObjects.Count - 1;
+
+        for (int i = count; i > 0; i--)
         {
             ObjectThrow(StackObjects[i]);
             objectMovements[i].isCrush = true;
             objectMovements[i].stackCount = -1;
             ObjectThrow(StackObjects[i]);
             StackObjects[i].tag = "Potion";
+            StackObjects.RemoveAt(i);
+            objectMovements.RemoveAt(i);
         }
 
-        objectMovements.Clear();
-        StackObjects.Clear();
     }
 
     private void ObjectThrow(GameObject tempObject)

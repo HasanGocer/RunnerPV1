@@ -83,6 +83,7 @@ public class Buttons : MonoSingleton<Buttons>
     {
         _startPanel.SetActive(false);
         CharacterBar.Instance.BarPanel.SetActive(true);
+        CharacterManager.Instance.character.GetComponent<CharacterTouch>().StartButton();
         GameManager.Instance.enumStat = GameManager.GameStat.start;
 
         CharacterBar.Instance.BarUpdate();
