@@ -94,8 +94,8 @@ public class StackMechanic : MonoSingleton<StackMechanic>
     {
         Vector3 tempScale = tempObject.transform.localScale;
         tempObject.transform.DOScale(tempObject.transform.localScale * 1.3f, _scaleTime);
-        yield return new WaitForSeconds(_scaleTime + _stackDelayTime);
+        yield return new WaitForSeconds(_scaleTime);
         tempObject.transform.DOScale(tempScale, _scaleTime);
-        yield return new WaitForSeconds(_scaleTime + _stackDelayTime);
+        yield return new WaitForSeconds(_scaleTime);
     }
 }

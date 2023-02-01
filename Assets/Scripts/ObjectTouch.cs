@@ -45,9 +45,9 @@ public class ObjectTouch : MonoBehaviour
     private IEnumerator ConvertObject()
     {
         Vector3 tempScale = transform.localScale;
-        transform.DOScale(transform.localScale * 1.3f, 0.3f);
-        yield return new WaitForSeconds(0.4f);
-        transform.DOScale(tempScale, 0.3f);
-        yield return new WaitForSeconds(0.4f);
+        transform.DOScale(transform.localScale * 1.3f, 0.2f);
+        yield return new WaitForSeconds(0.2f);
+        transform.DOScale(tempScale, 0.2f);
+        yield return new WaitForSeconds(0.2f);
     }
 }
