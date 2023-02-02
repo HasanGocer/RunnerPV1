@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.54509807, g: 0.6784314, b: 0.94509804, a: 1}
+  m_FogColor: {r: 0.6313726, g: 0.9372549, b: 0.8117647, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.06
   m_LinearFogStart: 35
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28085268, g: 0.3660276, b: 0.49833205, a: 1}
+  m_IndirectSpecularColor: {r: 0.28085247, g: 0.3660274, b: 0.4983291, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9164,7 +9164,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.54645777, g: 0.6775313, b: 0.9433962, a: 0}
+  m_BackGroundColor: {r: 0.6291029, g: 0.9339623, b: 0.808783, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -12143,9 +12143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b86dc0ebe1334daa3839ed4fa5754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  macWobble: 0.003
-  wobbleSpeed: 0.002
-  recovery: 0.43
+  macWobble: 0.03
+  wobbleSpeed: 0.4
+  recovery: 1
 --- !u!4 &2215982046650217211
 Transform:
   m_ObjectHideFlags: 0
@@ -22762,6 +22762,10 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 7877d54ad8862c044bffe576e04ff05b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8ccb5f75a58a6da41ba5c0e46b8d955a, type: 2}
     - target: {fileID: 919132149155446097, guid: 7877d54ad8862c044bffe576e04ff05b, type: 3}
       propertyPath: m_Name
       value: 1 (1)
@@ -22991,9 +22995,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b86dc0ebe1334daa3839ed4fa5754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  macWobble: 0.003
-  wobbleSpeed: 0.002
-  recovery: 0.43
+  macWobble: 0.03
+  wobbleSpeed: 0.4
+  recovery: 1
 --- !u!224 &8497009792062097368
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23294,9 +23298,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b86dc0ebe1334daa3839ed4fa5754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  macWobble: 0.003
-  wobbleSpeed: 0.002
-  recovery: 0.43
+  macWobble: 0.03
+  wobbleSpeed: 0.4
+  recovery: 1
 --- !u!1001 &8810495383313537457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23311,7 +23315,11 @@ PrefabInstance:
     - target: {fileID: 359411635643663532, guid: d7406be61b6079d419d9c8a61a44c8ef, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c4ec3a22204679b43aef89d424acac9b, type: 2}
+      objectReference: {fileID: 2100000, guid: 749b77d6db8a88245a22d62f03f81fdc, type: 2}
+    - target: {fileID: 5519031840714429185, guid: d7406be61b6079d419d9c8a61a44c8ef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6170402076263824946, guid: d7406be61b6079d419d9c8a61a44c8ef, type: 3}
       propertyPath: m_Name
       value: 2 (1)
