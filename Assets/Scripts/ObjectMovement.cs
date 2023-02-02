@@ -17,7 +17,7 @@ public class ObjectMovement : MonoBehaviour
         while (!isCrush && stackCount != -1 && GameManager.Instance.enumStat == GameManager.GameStat.start)
         {
             transform.position = new Vector3(
-           Mathf.Lerp(transform.position.x, StackMechanic.Instance.StackObjects[stackCount - 2].transform.position.x, Time.deltaTime * (10 + stackCount)),
+           Mathf.Lerp(transform.position.x, StackMechanic.Instance.StackObjects[stackCount - 2].transform.position.x, Time.deltaTime * (10 + stackCount * 2)),
              transform.position.y,
               CharacterManager.Instance.characterObjectPos.transform.position.z + stackCount * StackMechanic.Instance.stackDistance);
             yield return new WaitForSeconds(Time.deltaTime / 3);
