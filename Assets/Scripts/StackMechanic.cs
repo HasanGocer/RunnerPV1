@@ -11,6 +11,7 @@ public class StackMechanic : MonoSingleton<StackMechanic>
     [SerializeField] private float _stackDelayTime, _scaleTime;
     [SerializeField] private int _velocityMaxRange;
     bool isCrush;
+    bool isJump;
 
     public IEnumerator AddNewObject(GameObject newObject)
     {
@@ -25,15 +26,21 @@ public class StackMechanic : MonoSingleton<StackMechanic>
         objectMovement.stackCount = objectMovements.Count;
         StartCoroutine(objectMovement.ObjectMove());
 
-        for (int i = 0; i < StackObjects.Count; i++)
+        if (!isJump)
         {
-            if (objectMovements[i] != null)
+            isJump = true;
+            for (int i = 0; i < StackObjects.Count; i++)
             {
-                StartCoroutine(ObjectScale(StackObjects[i]));
-                yield return new WaitForSeconds(_stackDelayTime);
+                if (objectMovements[i] != null)
+                {
+                    StartCoroutine(ObjectScale(StackObjects[i]));
+                    yield return new WaitForSeconds(_stackDelayTime);
+                }
+                else break;
             }
-            else break;
+            isJump = false;
         }
+
     }
 
     public void ObjectSeller(GameObject tempObject)
