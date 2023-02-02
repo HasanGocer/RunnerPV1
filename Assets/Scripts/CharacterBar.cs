@@ -26,13 +26,12 @@ public class CharacterBar : MonoSingleton<CharacterBar>
         {
             temp += Time.deltaTime;
             nowDistance = Vector3.Distance(characterManager.character.transform.position, characterManager.FinishPos.transform.position);
-            float lerpCount = nowDistance / maxDistance;
-            bar.fillAmount = Mathf.Lerp(lerpCount, 1, temp);
+            float lerpCount = (maxDistance - nowDistance) / maxDistance;
+
+            bar.fillAmount = lerpCount;
             yield return new WaitForEndOfFrame();
-            if (bar.fillAmount == 1)
-            {
+            if (bar.fillAmount == 1 || 1 > Vector3.Distance(characterManager.character.transform.position, characterManager.FinishPos.transform.position))
                 break;
-            }
         }
     }
 }

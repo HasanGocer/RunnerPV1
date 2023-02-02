@@ -64,6 +64,6 @@ public class ObjectTouch : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         transform.DOScale(tempScale, 0.2f);
         yield return new WaitForSeconds(0.2f);
-        transform.localScale = tempScale;
+        transform.localScale = new Vector3(1, 1, 1);
     }
 }

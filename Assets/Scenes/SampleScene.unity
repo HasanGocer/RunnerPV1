@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28085247, g: 0.3660274, b: 0.4983291, a: 1}
+  m_IndirectSpecularColor: {r: 0.28085268, g: 0.3660276, b: 0.49833205, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9736,7 +9736,7 @@ MonoBehaviour:
   mainMusic: {fileID: 8300000, guid: 52d246711ae83d8468915f2c99787018, type: 3}
   sise: {fileID: 8300000, guid: 6cf5ea606b655104bad8c7c5736819db, type: 3}
   coin: {fileID: 8300000, guid: 14fd7100fdcc1d44a910d4054b5dd370, type: 3}
-  glassBreak: {fileID: 0}
+  glassBreak: {fileID: 8300000, guid: 14fd7100fdcc1d44a910d4054b5dd370, type: 3}
 --- !u!114 &1846269388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11324,7 +11324,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 524108286}
   m_RootOrder: 3

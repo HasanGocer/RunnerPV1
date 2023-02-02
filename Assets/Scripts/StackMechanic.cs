@@ -27,8 +27,12 @@ public class StackMechanic : MonoSingleton<StackMechanic>
 
         for (int i = 0; i < StackObjects.Count; i++)
         {
-            StartCoroutine(ObjectScale(StackObjects[i]));
-            yield return new WaitForSeconds(_stackDelayTime);
+            if (objectMovements[i] != null)
+            {
+                StartCoroutine(ObjectScale(StackObjects[i]));
+                yield return new WaitForSeconds(_stackDelayTime);
+            }
+            else break;
         }
     }
 
@@ -62,16 +66,20 @@ public class StackMechanic : MonoSingleton<StackMechanic>
 
             for (int i = count; i > 0; i--)
             {
-                StartCoroutine(ObjectThrow(StackObjects[i]));
-                objectMovements[i].isCrush = true;
-                objectMovements[i].stackCount = -1;
-                objectMovements[i].boxCollider.isTrigger = true;
-                objectMovements[i].objectTouch.isActive = false;
-                StackObjects[i].tag = "Potion";
-                freeObject = StackObjects[i];
-                StackObjects.RemoveAt(i);
-                objectMovements.RemoveAt(i);
-                if (tempObject == freeObject) break;
+                if (objectMovements[i] != null)
+                {
+                    StartCoroutine(ObjectThrow(StackObjects[i]));
+                    objectMovements[i].isCrush = true;
+                    objectMovements[i].stackCount = -1;
+                    objectMovements[i].boxCollider.isTrigger = true;
+                    objectMovements[i].objectTouch.isActive = false;
+                    StackObjects[i].tag = "Potion";
+                    freeObject = StackObjects[i];
+                    StackObjects.RemoveAt(i);
+                    objectMovements.RemoveAt(i);
+                    if (tempObject == freeObject) break;
+                }
+                else break;
             }
             isCrush = false;
         }
@@ -103,17 +111,16 @@ public class StackMechanic : MonoSingleton<StackMechanic>
     {
         Rigidbody rigidbody = tempObject.GetComponent<Rigidbody>();
         rigidbody.velocity = new Vector3(Random.Range(-1 * _velocityMaxRange, _velocityMaxRange), 0, Random.Range(0, _velocityMaxRange));
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         rigidbody.isKinematic = true;
         yield return new WaitForSeconds(0.1f);
         rigidbody.isKinematic = false;
     }
     private IEnumerator ObjectScale(GameObject tempObject)
     {
-        Vector3 tempScale = tempObject.transform.localScale;
         tempObject.transform.DOScale(tempObject.transform.localScale * 1.1f, _scaleTime);
         yield return new WaitForSeconds(_scaleTime);
-        tempObject.transform.DOScale(tempScale, _scaleTime);
-        tempObject.transform.localScale = tempScale;
+        tempObject.transform.DOScale(new Vector3(1, 1, 1), _scaleTime);
+        tempObject.transform.localScale = new Vector3(1, 1, 1);
     }
 }

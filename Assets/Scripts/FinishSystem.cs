@@ -116,13 +116,13 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     private IEnumerator FinishGrow()
     {
         growObject.SetActive(true);
-        float growTempFactor = (GameManager.Instance.addedMoney / 50);
+        float growTempFactor = (GameManager.Instance.addedMoney / 40);
         Camera.main.transform.DOMove(new Vector3(Camera.main.transform.position.x, growLoopPotion.transform.position.y + growTempFactor, Camera.main.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
         growLoopPotion.transform.DOMove(new Vector3(growLoopPotion.transform.position.x, growLoopPotion.transform.position.y + growTempFactor, growLoopPotion.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
         growObject.transform.DOScale(new Vector3(1, growTempFactor * 2, 1), growTempFactor * growFactor);
         yield return new WaitForSeconds(growFactor * growTempFactor);
         StartCoroutine(ParticalSystem.Instance.CallFinishPartical(growLoopPotion));
         Buttons.Instance.winPanel.SetActive(true);
-        Buttons.Instance.finishGameMoneyText.text = (growTempFactor * (GameManager.Instance.addedMoney / 100)).ToString();
+        Buttons.Instance.finishGameMoneyText.text = (GameManager.Instance.addedMoney).ToString();
     }
 }
