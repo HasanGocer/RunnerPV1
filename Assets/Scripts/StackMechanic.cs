@@ -57,6 +57,8 @@ public class StackMechanic : MonoSingleton<StackMechanic>
             GameObject freeObject;
             objectMovement.boxCollider.isTrigger = true;
             int count = StackObjects.Count - 1;
+            StartCoroutine(ParticalSystem.Instance.CallBreakerPartical(tempObject));
+            SoundSystem.Instance.CallGlassBreak();
 
             for (int i = count; i > 0; i--)
             {

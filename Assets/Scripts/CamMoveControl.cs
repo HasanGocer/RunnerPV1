@@ -6,7 +6,7 @@ public class CamMoveControl : MonoSingleton<CamMoveControl>
 {
     public GameObject target;
     [SerializeField] private Vector3 distance;
-    [SerializeField] private float time;
+    public float time;
 
     private void Update()
     {

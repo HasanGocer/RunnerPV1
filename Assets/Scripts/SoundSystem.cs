@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundSystem : MonoSingleton<SoundSystem>
 {
     [SerializeField] private AudioSource mainSource;
-    [SerializeField] private AudioClip mainMusic, objectTouch, bar, box;
+    [SerializeField] private AudioClip mainMusic, sise, coin, glassBreak;
 
     public void MainMusicPlay()
     {
@@ -19,16 +19,16 @@ public class SoundSystem : MonoSingleton<SoundSystem>
         mainSource.volume = 0;
     }
 
-    public void CallObjectTouch()
+    public void CallSise()
     {
-        mainSource.PlayOneShot(objectTouch);
+        mainSource.PlayOneShot(sise);
     }
-    public void CallBar()
+    public void CallCoin()
     {
-        mainSource.PlayOneShot(bar);
+        mainSource.PlayOneShot(coin);
     }
-    public void CallBox()
+    public void CallGlassBreak()
     {
-        mainSource.PlayOneShot(box);
+        mainSource.PlayOneShot(glassBreak);
     }
 }

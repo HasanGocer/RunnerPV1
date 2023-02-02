@@ -23,9 +23,16 @@ public class ObjectTouch : MonoBehaviour
         if (other.CompareTag("Potion") && isActive)
             StartCoroutine(StackMechanic.Instance.AddNewObject(other.gameObject));
         if (other.CompareTag("PConverter") && enumStat == PotionStat.level1 && isActive)
+        {
+            SoundSystem.Instance.CallSise();
+            StartCoroutine(ParticalSystem.Instance.CallPotionPartical(gameObject));
             StartCoroutine(ConvertObjectBool());
+        }
         if (other.CompareTag("SConverter") && isActive && enumStat == PotionStat.level2 || enumStat == PotionStat.level3)
+        {
+            StartCoroutine(ParticalSystem.Instance.CallConvertPartical(gameObject));
             StartCoroutine(ConvertObjectBool());
+        }
         if ((other.CompareTag("FinishConverter") || other.CompareTag("Finish")) && isActive)
             Sell(other.gameObject);
         if (other.CompareTag("Crusher") && isActive)

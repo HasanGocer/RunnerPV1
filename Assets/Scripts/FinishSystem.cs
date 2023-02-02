@@ -49,9 +49,10 @@ public class FinishSystem : MonoSingleton<FinishSystem>
 
     public void FinishTime()
     {
-        CamMoveControl.Instance.enabled = false;
+        CamMoveControl.Instance.target = shakePotionGO;
+        CamMoveControl.Instance.time = 1;
         tempScale = shakePotionGO.transform.localScale;
-        StartCoroutine(CameraLerp());
+        ShakePanelTrue();
     }
 
     private IEnumerator CameraLerp()
@@ -107,6 +108,7 @@ public class FinishSystem : MonoSingleton<FinishSystem>
             growPotion = Instantiate(throwFinishPartical, throwFinishPos.transform.position, throwFinishPos.transform.rotation);
             growLoopPotion = Instantiate(throwLoopPartical, throwFinishPos.transform.position, throwFinishPos.transform.rotation);
             yield return new WaitForSeconds(throwAfterTime);
+            SoundSystem.Instance.CallSise();
             growPotion.SetActive(false);
             StartCoroutine(FinishGrow());
         }
@@ -119,7 +121,8 @@ public class FinishSystem : MonoSingleton<FinishSystem>
         growLoopPotion.transform.DOMove(new Vector3(growLoopPotion.transform.position.x, growLoopPotion.transform.position.y + growTempFactor, growLoopPotion.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
         growObject.transform.DOScale(new Vector3(1, growTempFactor * 2, 1), growTempFactor * growFactor);
         yield return new WaitForSeconds(growFactor * growTempFactor);
+        StartCoroutine(ParticalSystem.Instance.CallFinishPartical(growLoopPotion));
         Buttons.Instance.winPanel.SetActive(true);
-        Buttons.Instance.finishGameMoneyText.text = (growTempFactor * GameManager.Instance.addedMoney).ToString();
+        Buttons.Instance.finishGameMoneyText.text = (growTempFactor * (GameManager.Instance.addedMoney / 100)).ToString();
     }
 }
