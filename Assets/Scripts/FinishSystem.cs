@@ -69,6 +69,7 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     }
     private IEnumerator FinalyFinishTime()
     {
+        shakePanel.SetActive(false);
         shakePotionGO.transform.DOJump(throwFinishPos.transform.position, throwStrength, (int)throwStrength, throwTime);
         yield return new WaitForSeconds(throwTime);
         growPotion = Instantiate(throwFinishPartical, throwFinishPos.transform.position, throwFinishPos.transform.rotation);
@@ -77,10 +78,12 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     }
     private IEnumerator FinishGrow()
     {
+        growObject.SetActive(true);
         float growTempFactor = (GameManager.Instance.addedMoney / 50);
         growPotion.transform.DOMove(new Vector3(growPotion.transform.position.x, growPotion.transform.position.y + growTempFactor, growPotion.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
         growObject.transform.DOScale(new Vector3(1, growTempFactor * 2, 1), growTempFactor * growFactor);
         yield return new WaitForSeconds(growFactor * growTempFactor);
         Buttons.Instance.winPanel.SetActive(true);
+        Buttons.Instance.finishGameMoneyText.text = (growTempFactor * GameManager.Instance.addedMoney).ToString();
     }
 }

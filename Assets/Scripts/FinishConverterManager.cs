@@ -10,6 +10,7 @@ public class FinishConverterManager : MonoBehaviour
     public IEnumerator SellItem(GameObject obj, int level, bool isLast)
     {
         if (!isLast) StackMechanic.Instance.ObjectSeller(obj);
+        else FinishSystem.Instance.FinishTime();
         Vector3 firstPos = new Vector3(obj.transform.position.x, FinishPos.transform.position.y, FinishPos.transform.position.z);
         obj.transform.position = firstPos;
         obj.transform.DOMove(FinishPos.transform.position, 0.5f).SetEase(Ease.InOutSine);

@@ -10,11 +10,13 @@ public class StackMechanic : MonoSingleton<StackMechanic>
     public float stackDistance;
     [SerializeField] private float _stackDelayTime, _scaleTime;
     [SerializeField] private int _velocityMaxRange;
+    bool isCrush;
 
     public IEnumerator AddNewObject(GameObject newObject)
     {
         ObjectMovement objectMovement = newObject.GetComponent<ObjectMovement>();
 
+        objectMovement.objectTouch.isActive = true;
         newObject.tag = "Untagged";
         StackObjects.Add(newObject);
         objectMovements.Add(objectMovement);
@@ -23,9 +25,9 @@ public class StackMechanic : MonoSingleton<StackMechanic>
         objectMovement.stackCount = objectMovements.Count;
         StartCoroutine(objectMovement.ObjectMove());
 
-        foreach (GameObject item in StackObjects)
+        for (int i = 0; i < StackObjects.Count; i++)
         {
-            StartCoroutine(ObjectScale(item));
+            StartCoroutine(ObjectScale(StackObjects[i]));
             yield return new WaitForSeconds(_stackDelayTime);
         }
     }
@@ -49,18 +51,27 @@ public class StackMechanic : MonoSingleton<StackMechanic>
 
     public void CrashObjects(GameObject tempObject, ObjectMovement objectMovement)
     {
-        objectMovement.boxCollider.isTrigger = true;
-        int count = StackObjects.Count - 1;
-
-        for (int i = count; i > 0; i--)
+        if (!isCrush)
         {
-            ObjectThrow(StackObjects[i]);
-            objectMovements[i].isCrush = true;
-            objectMovements[i].stackCount = -1;
-            StackObjects[i].tag = "Potion";
-            StackObjects.RemoveAt(i);
-            objectMovements.RemoveAt(i);
-            if (tempObject == StackObjects[i]) break;
+            isCrush = true;
+            GameObject freeObject;
+            objectMovement.boxCollider.isTrigger = true;
+            int count = StackObjects.Count - 1;
+
+            for (int i = count; i > 0; i--)
+            {
+                StartCoroutine(ObjectThrow(StackObjects[i]));
+                objectMovements[i].isCrush = true;
+                objectMovements[i].stackCount = -1;
+                objectMovements[i].boxCollider.isTrigger = true;
+                objectMovements[i].objectTouch.isActive = false;
+                StackObjects[i].tag = "Potion";
+                freeObject = StackObjects[i];
+                StackObjects.RemoveAt(i);
+                objectMovements.RemoveAt(i);
+                if (tempObject == freeObject) break;
+            }
+            isCrush = false;
         }
     }
 
@@ -76,19 +87,24 @@ public class StackMechanic : MonoSingleton<StackMechanic>
 
         for (int i = count; i > 0; i--)
         {
-            ObjectThrow(StackObjects[i]);
+            StartCoroutine(ObjectThrow(StackObjects[i]));
             objectMovements[i].isCrush = true;
             objectMovements[i].stackCount = -1;
-            ObjectThrow(StackObjects[i]);
+            objectMovements[i].objectTouch.isActive = false;
             StackObjects[i].tag = "Potion";
             StackObjects.RemoveAt(i);
             objectMovements.RemoveAt(i);
         }
     }
 
-    private void ObjectThrow(GameObject tempObject)
+    private IEnumerator ObjectThrow(GameObject tempObject)
     {
-        tempObject.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-1 * _velocityMaxRange, _velocityMaxRange), 0, Random.Range(0, _velocityMaxRange));
+        Rigidbody rigidbody = tempObject.GetComponent<Rigidbody>();
+        rigidbody.velocity = new Vector3(Random.Range(-1 * _velocityMaxRange, _velocityMaxRange), 0, Random.Range(0, _velocityMaxRange));
+        yield return new WaitForSeconds(2);
+        rigidbody.isKinematic = true;
+        yield return new WaitForSeconds(0.1f);
+        rigidbody.isKinematic = false;
     }
     private IEnumerator ObjectScale(GameObject tempObject)
     {
@@ -96,6 +112,6 @@ public class StackMechanic : MonoSingleton<StackMechanic>
         tempObject.transform.DOScale(tempObject.transform.localScale * 1.1f, _scaleTime);
         yield return new WaitForSeconds(_scaleTime);
         tempObject.transform.DOScale(tempScale, _scaleTime);
-        yield return new WaitForSeconds(_scaleTime);
+        tempObject.transform.localScale = tempScale;
     }
 }

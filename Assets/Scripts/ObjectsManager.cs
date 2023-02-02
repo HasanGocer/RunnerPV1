@@ -12,8 +12,14 @@ public class ObjectsManager : MonoSingleton<ObjectsManager>
     public void ObjectsPlacement()
     {
         for (int i = 0; i < ObjectsConverterPos.Count; i++)
-            Instantiate(ObjectsConverters[Random.Range(0, ObjectsConverters.Count)], ObjectsConverterPos[i].transform.position, ObjectsConverterPos[i].transform.rotation);
+        {
+            GameObject obj = Instantiate(ObjectsConverters[Random.Range(0, ObjectsConverters.Count)], ObjectsConverterPos[i].transform.position, ObjectsConverterPos[i].transform.rotation);
+            obj.SetActive(true);
+        }
         for (int i = 0; i < ObjectsPotionPos.Count; i++)
-            Instantiate(ObjectsPotions[Random.Range(0, ObjectsPotions.Count)], ObjectsPotionPos[i].transform.position, ObjectsPotionPos[i].transform.rotation);
+        {
+            GameObject obj = Instantiate(ObjectsPotions[Random.Range(0, ObjectsPotions.Count)], ObjectsPotionPos[i].transform.position, ObjectsPotionPos[i].transform.rotation);
+            obj.SetActive(true);
+        }
     }
 }

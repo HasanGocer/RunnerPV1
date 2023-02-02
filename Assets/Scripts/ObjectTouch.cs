@@ -14,23 +14,29 @@ public class ObjectTouch : MonoBehaviour
     }
 
     public PotionStat enumStat = PotionStat.level1;
+    public bool isActive;
     [SerializeField] private ObjectMovement objectMovement;
     bool isConvert = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Potion"))
+        if (other.CompareTag("Potion") && isActive)
             StartCoroutine(StackMechanic.Instance.AddNewObject(other.gameObject));
-        if (other.CompareTag("PConverter") && enumStat == PotionStat.level1)
+        if (other.CompareTag("PConverter") && enumStat == PotionStat.level1 && isActive)
             StartCoroutine(ConvertObjectBool());
-        if (other.CompareTag("SConverter") && enumStat == PotionStat.level2 || enumStat == PotionStat.level3)
+        if (other.CompareTag("SConverter") && isActive && enumStat == PotionStat.level2 || enumStat == PotionStat.level3)
             StartCoroutine(ConvertObjectBool());
-        if (other.CompareTag("FinishConverter") || other.CompareTag("Finish"))
-            StartCoroutine(other.GetComponent<FinishConverterManager>().SellItem(gameObject, (int)enumStat, false));
-        if (other.CompareTag("Crusher"))
+        if ((other.CompareTag("FinishConverter") || other.CompareTag("Finish")) && isActive)
+            Sell(other.gameObject);
+        if (other.CompareTag("Crusher") && isActive)
             StackMechanic.Instance.CrashObjects(gameObject, objectMovement);
     }
+    private void Sell(GameObject other)
+    {
+        isActive = false;
+        StartCoroutine(other.GetComponent<FinishConverterManager>().SellItem(gameObject, (int)enumStat, false));
 
+    }
     private IEnumerator ConvertObjectBool()
     {
         if (!isConvert)

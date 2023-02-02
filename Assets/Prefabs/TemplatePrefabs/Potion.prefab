@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enumStat: 1
+  isActive: 0
   objectMovement: {fileID: 4441686706753940969}
 --- !u!114 &4441686706753940969
 MonoBehaviour:
@@ -68,6 +69,7 @@ MonoBehaviour:
   stackCount: -1
   isCrush: 0
   boxCollider: {fileID: 2458470389108049804}
+  objectTouch: {fileID: 7720257809789991189}
 --- !u!65 &2458470389108049804
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -89,7 +91,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2413593068624691250}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.0001
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
