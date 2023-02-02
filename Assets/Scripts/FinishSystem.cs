@@ -10,7 +10,6 @@ public class FinishSystem : MonoSingleton<FinishSystem>
 
     [SerializeField] private GameObject cameraPos;
     [SerializeField] private GameObject cameraLookPos;
-    [SerializeField] private int finishRate;
 
     [Space(10)]
 
@@ -37,7 +36,7 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     [Header("Thros_Field")]
 
     [SerializeField] private float growFactor;
-    [SerializeField] private GameObject growPotion;
+    private GameObject growPotion;
     [SerializeField] private GameObject growObject;
 
     public void StartFinish()

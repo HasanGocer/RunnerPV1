@@ -31,6 +31,7 @@ public class ItemData : MonoSingleton<ItemData>
          }
          */
 
+        ObjectsManager.Instance.ObjectsPlacement();
         FinishSystem.Instance.StartFinish();
     }
 
