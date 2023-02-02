@@ -21,7 +21,6 @@ public class StackMechanic : MonoSingleton<StackMechanic>
         newObject.tag = "Untagged";
         StackObjects.Add(newObject);
         objectMovements.Add(objectMovement);
-        newObject.transform.position = new Vector3(CharacterManager.Instance.characterObjectPos.transform.position.x, CharacterManager.Instance.characterObjectPos.transform.position.y, CharacterManager.Instance.characterObjectPos.transform.position.z - (StackObjects.Count - 1) * stackDistance);
         objectMovement.isCrush = false;
         objectMovement.stackCount = objectMovements.Count;
         StartCoroutine(objectMovement.ObjectMove());

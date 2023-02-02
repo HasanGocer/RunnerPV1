@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CharacterBar : MonoSingleton<CharacterBar>
 {
     public GameObject BarPanel;
     [SerializeField] private Image bar;
+    [SerializeField] RectTransform rectTransform;
     [SerializeField] private float nowDistance, maxDistance;
+    [SerializeField] TMP_Text nowLevel, nextLevel;
+
+    public void StartBar()
+    {
+        nowLevel.text = GameManager.Instance.level.ToString();
+        nextLevel.text = (GameManager.Instance.level + 1).ToString();
+    }
 
     public void BarUpdate()
     {
@@ -27,6 +36,7 @@ public class CharacterBar : MonoSingleton<CharacterBar>
             temp += Time.deltaTime;
             nowDistance = Vector3.Distance(characterManager.character.transform.position, characterManager.FinishPos.transform.position);
             float lerpCount = (maxDistance - nowDistance) / maxDistance;
+            rectTransform.anchoredPosition = new Vector2((rectTransform.sizeDelta.x * bar.fillAmount * 4f) - 250, rectTransform.anchoredPosition.y);
 
             bar.fillAmount = lerpCount;
             yield return new WaitForEndOfFrame();

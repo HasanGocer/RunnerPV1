@@ -37,6 +37,7 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     [Header("Thros_Field")]
 
     [SerializeField] private float growFactor;
+    [SerializeField] private float growMaxCount;
     private GameObject growPotion;
     private GameObject growLoopPotion;
     bool isFinish;
@@ -116,11 +117,12 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     private IEnumerator FinishGrow()
     {
         growObject.SetActive(true);
-        float growTempFactor = (GameManager.Instance.addedMoney / 40);
-        Camera.main.transform.DOMove(new Vector3(Camera.main.transform.position.x, growLoopPotion.transform.position.y + growTempFactor, Camera.main.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
-        growLoopPotion.transform.DOMove(new Vector3(growLoopPotion.transform.position.x, growLoopPotion.transform.position.y + growTempFactor, growLoopPotion.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
-        growObject.transform.DOScale(new Vector3(1, growTempFactor * 2, 1), growTempFactor * growFactor);
-        yield return new WaitForSeconds(growFactor * growTempFactor);
+        float growTempFactor = (GameManager.Instance.addedMoney / 20) * growFactor;
+        if (growTempFactor > growMaxCount) growTempFactor = growMaxCount;
+        CamMoveControl.Instance.target = growLoopPotion;
+        growLoopPotion.transform.DOMove(new Vector3(growLoopPotion.transform.position.x, growLoopPotion.transform.position.y + growTempFactor, growLoopPotion.transform.position.z), growTempFactor / growFactor).SetEase(Ease.InOutSine);
+        growObject.transform.DOScale(new Vector3(1, growTempFactor * 2, 1), growTempFactor / growFactor);
+        yield return new WaitForSeconds(growFactor * growTempFactor / growFactor);
         StartCoroutine(ParticalSystem.Instance.CallFinishPartical(growLoopPotion));
         Buttons.Instance.winPanel.SetActive(true);
         Buttons.Instance.finishGameMoneyText.text = (GameManager.Instance.addedMoney).ToString();
