@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
         movement = new Vector3(inputVector.x, 0, 0);
         //sað sol
-        transform.position = Vector3.Lerp(transform.position, transform.position + movement * (speed / 12) * Time.deltaTime, Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, transform.position + movement * (speed / 15) * Time.deltaTime, Time.deltaTime);
         // transform.Translate(movement * speed / 100 * Time.deltaTime);
 
         BoundaryCheck();

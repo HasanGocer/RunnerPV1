@@ -47,12 +47,29 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     public void FinishTime()
     {
         CamMoveControl.Instance.enabled = false;
-        Camera.main.gameObject.transform.position = cameraPos.transform.position;
-        Camera.main.gameObject.transform.LookAt(cameraLookPos.transform);
         tempScale = shakePotionGO.transform.localScale;
-        ShakePanelTrue();
+        StartCoroutine(CameraLerp());
     }
 
+    private IEnumerator CameraLerp()
+    {
+        while (true)
+        {
+            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, cameraPos.transform.position, Time.deltaTime * 10);
+            yield return new WaitForSeconds(Time.deltaTime * 10);
+            if (1 > Vector3.Distance(Camera.main.gameObject.transform.position, cameraPos.transform.position))
+            {
+                StartCoroutine(CameraLook());
+                ShakePanelTrue();
+                break;
+            }
+        }
+    }
+    private IEnumerator CameraLook()
+    {
+        Camera.main.gameObject.transform.DOLookAt(cameraLookPos.transform.position, 0.4f);
+        yield return new WaitForSeconds(0.4f);
+    }
     private void ShakePanelTrue()
     {
         shakePanel.SetActive(true);
@@ -72,6 +89,7 @@ public class FinishSystem : MonoSingleton<FinishSystem>
         shakePanel.SetActive(false);
         shakePotionGO.transform.DOJump(throwFinishPos.transform.position, throwStrength, (int)throwStrength, throwTime);
         yield return new WaitForSeconds(throwTime);
+        shakePotionGO.SetActive(false);
         growPotion = Instantiate(throwFinishPartical, throwFinishPos.transform.position, throwFinishPos.transform.rotation);
         yield return new WaitForSeconds(throwAfterTime);
         StartCoroutine(FinishGrow());
@@ -80,6 +98,7 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     {
         growObject.SetActive(true);
         float growTempFactor = (GameManager.Instance.addedMoney / 50);
+        Camera.main.transform.DOMove(new Vector3(growPotion.transform.position.x, growPotion.transform.position.y + growTempFactor, growPotion.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
         growPotion.transform.DOMove(new Vector3(growPotion.transform.position.x, growPotion.transform.position.y + growTempFactor, growPotion.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
         growObject.transform.DOScale(new Vector3(1, growTempFactor * 2, 1), growTempFactor * growFactor);
         yield return new WaitForSeconds(growFactor * growTempFactor);
