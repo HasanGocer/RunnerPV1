@@ -30,6 +30,7 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     [SerializeField] private float throwTime, throwAfterTime;
     [SerializeField] private GameObject throwFinishPos;
     [SerializeField] private GameObject throwFinishPartical;
+    [SerializeField] private GameObject throwLoopPartical;
 
     [Space(10)]
 
@@ -37,6 +38,8 @@ public class FinishSystem : MonoSingleton<FinishSystem>
 
     [SerializeField] private float growFactor;
     private GameObject growPotion;
+    private GameObject growLoopPotion;
+    bool isFinish;
     [SerializeField] private GameObject growObject;
 
     public void StartFinish()
@@ -55,8 +58,8 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     {
         while (true)
         {
-            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, cameraPos.transform.position, Time.deltaTime * 10);
-            yield return new WaitForSeconds(Time.deltaTime * 10);
+            Camera.main.gameObject.transform.position = Vector3.Lerp(Camera.main.gameObject.transform.position, cameraPos.transform.position, Time.deltaTime * 6);
+            yield return new WaitForSeconds(Time.deltaTime);
             if (1 > Vector3.Distance(Camera.main.gameObject.transform.position, cameraPos.transform.position))
             {
                 StartCoroutine(CameraLook());
@@ -67,13 +70,21 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     }
     private IEnumerator CameraLook()
     {
-        Camera.main.gameObject.transform.DOLookAt(cameraLookPos.transform.position, 0.4f);
-        yield return new WaitForSeconds(0.4f);
+        Camera.main.gameObject.transform.DOLookAt(cameraLookPos.transform.position, 0.3f);
+        yield return new WaitForSeconds(0.3f);
     }
     private void ShakePanelTrue()
     {
         shakePanel.SetActive(true);
         shakePotionGO.SetActive(true);
+        CharacterManager.Instance.character.SetActive(true);
+        for (int i = 0; i < 4; i++)
+            if (CharacterManager.Instance.character.transform.GetChild(i).gameObject.activeInHierarchy)
+            {
+                shakePotionGO.transform.GetChild(i).gameObject.SetActive(true);
+                break;
+            }
+        CharacterManager.Instance.character.SetActive(false);
     }
     private IEnumerator ShakeTime()
     {
@@ -86,20 +97,26 @@ public class FinishSystem : MonoSingleton<FinishSystem>
     }
     private IEnumerator FinalyFinishTime()
     {
-        shakePanel.SetActive(false);
-        shakePotionGO.transform.DOJump(throwFinishPos.transform.position, throwStrength, (int)throwStrength, throwTime);
-        yield return new WaitForSeconds(throwTime);
-        shakePotionGO.SetActive(false);
-        growPotion = Instantiate(throwFinishPartical, throwFinishPos.transform.position, throwFinishPos.transform.rotation);
-        yield return new WaitForSeconds(throwAfterTime);
-        StartCoroutine(FinishGrow());
+        if (!isFinish)
+        {
+            isFinish = true;
+            shakePanel.SetActive(false);
+            shakePotionGO.transform.DOJump(throwFinishPos.transform.position, throwStrength, (int)throwStrength, throwTime);
+            yield return new WaitForSeconds(throwTime);
+            shakePotionGO.SetActive(false);
+            growPotion = Instantiate(throwFinishPartical, throwFinishPos.transform.position, throwFinishPos.transform.rotation);
+            growLoopPotion = Instantiate(throwLoopPartical, throwFinishPos.transform.position, throwFinishPos.transform.rotation);
+            yield return new WaitForSeconds(throwAfterTime);
+            growPotion.SetActive(false);
+            StartCoroutine(FinishGrow());
+        }
     }
     private IEnumerator FinishGrow()
     {
         growObject.SetActive(true);
         float growTempFactor = (GameManager.Instance.addedMoney / 50);
-        Camera.main.transform.DOMove(new Vector3(growPotion.transform.position.x, growPotion.transform.position.y + growTempFactor, growPotion.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
-        growPotion.transform.DOMove(new Vector3(growPotion.transform.position.x, growPotion.transform.position.y + growTempFactor, growPotion.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
+        Camera.main.transform.DOMove(new Vector3(Camera.main.transform.position.x, growLoopPotion.transform.position.y + growTempFactor, Camera.main.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
+        growLoopPotion.transform.DOMove(new Vector3(growLoopPotion.transform.position.x, growLoopPotion.transform.position.y + growTempFactor, growLoopPotion.transform.position.z), growTempFactor * growFactor).SetEase(Ease.InOutSine);
         growObject.transform.DOScale(new Vector3(1, growTempFactor * 2, 1), growTempFactor * growFactor);
         yield return new WaitForSeconds(growFactor * growTempFactor);
         Buttons.Instance.winPanel.SetActive(true);

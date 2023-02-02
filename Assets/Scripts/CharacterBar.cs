@@ -26,7 +26,8 @@ public class CharacterBar : MonoSingleton<CharacterBar>
         {
             temp += Time.deltaTime;
             nowDistance = Vector3.Distance(characterManager.character.transform.position, characterManager.FinishPos.transform.position);
-            bar.fillAmount = Mathf.Lerp(nowDistance, maxDistance, temp);
+            float lerpCount = nowDistance / maxDistance;
+            bar.fillAmount = Mathf.Lerp(lerpCount, 1, temp);
             yield return new WaitForEndOfFrame();
             if (bar.fillAmount == 1)
             {
