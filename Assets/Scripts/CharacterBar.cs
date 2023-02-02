@@ -36,7 +36,7 @@ public class CharacterBar : MonoSingleton<CharacterBar>
             temp += Time.deltaTime;
             nowDistance = Vector3.Distance(characterManager.character.transform.position, characterManager.FinishPos.transform.position);
             float lerpCount = (maxDistance - nowDistance) / maxDistance;
-            rectTransform.anchoredPosition = new Vector2((rectTransform.sizeDelta.x * bar.fillAmount * 4f) - 250, rectTransform.anchoredPosition.y);
+            rectTransform.anchoredPosition = new Vector2((rectTransform.sizeDelta.x * bar.fillAmount * 4.3f) - 250, rectTransform.anchoredPosition.y);
 
             bar.fillAmount = lerpCount;
             yield return new WaitForEndOfFrame();
