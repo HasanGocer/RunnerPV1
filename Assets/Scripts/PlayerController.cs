@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private PlayerInputs PlayerInputs;
-    public float speed = 1f;
+    public float speed = 1f, horizontalSpeed;
     private Vector3 movement;
     public float xBound = 4.3f;
 
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
         movement = new Vector3(inputVector.x, 0, 0);
         //sað sol
-        transform.position = Vector3.Lerp(transform.position, transform.position + movement * (speed / 33) * Time.deltaTime, Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, transform.position + movement * (speed * horizontalSpeed) * Time.deltaTime, Time.deltaTime);
         // transform.Translate(movement * speed / 100 * Time.deltaTime);
 
         BoundaryCheck();
