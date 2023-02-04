@@ -32,12 +32,13 @@ public class StackMechanic : MonoSingleton<StackMechanic>
             for (int i = maxCount; i >= 0; i--)
             {
                 if (i == maxCount - 6) isJump = false;
-                if (StackObjects[i] != null)
-                {
-                    StartCoroutine(ObjectScale(StackObjects[i]));
-                    yield return new WaitForSeconds(_stackDelayTime);
-                }
-                else break;
+                if (i < StackObjects.Count)
+                    if (StackObjects[i] != null)
+                    {
+                        StartCoroutine(ObjectScale(StackObjects[i]));
+                        yield return new WaitForSeconds(_stackDelayTime);
+                    }
+                    else break;
             }
             isJump = false;
         }

@@ -43,6 +43,7 @@ public class CharacterTouch : MonoBehaviour
 
     private void FinishLine(GameObject other)
     {
+        CharacterBar.Instance.BarPanel.SetActive(false);
         StartCoroutine(other.GetComponent<FinishConverterManager>().SellItem(gameObject, (int)enumStat, true));
         GameManager.Instance.enumStat = GameManager.GameStat.finish;
 
