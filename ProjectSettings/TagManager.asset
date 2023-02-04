@@ -10,6 +10,7 @@ TagManager:
   - Crusher
   - PConverter
   - SConverter
+  - DConverter
   layers:
   - Default
   - TransparentFX

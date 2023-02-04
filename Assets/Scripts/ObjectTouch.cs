@@ -24,14 +24,21 @@ public class ObjectTouch : MonoBehaviour
             StartCoroutine(StackMechanic.Instance.AddNewObject(other.gameObject));
         if (other.CompareTag("PConverter") && enumStat == PotionStat.level1 && isActive)
         {
+            PointText.Instance.CallPointMoneyText(CharacterManager.Instance.character, 1, true);
             SoundSystem.Instance.CallSise();
             StartCoroutine(ParticalSystem.Instance.CallPotionPartical(gameObject));
             StartCoroutine(ConvertObjectBool());
         }
         if (other.CompareTag("SConverter") && isActive && enumStat == PotionStat.level2 || enumStat == PotionStat.level3)
         {
+            PointText.Instance.CallPointMoneyText(CharacterManager.Instance.character, 1, true);
             StartCoroutine(ParticalSystem.Instance.CallConvertPartical(gameObject));
             StartCoroutine(ConvertObjectBool());
+        }
+        if (other.CompareTag("DConverter"))
+        {
+            PointText.Instance.CallPointMoneyText(CharacterManager.Instance.character, 1, false);
+            StartCoroutine(ConvertDownObjectBool());
         }
         if ((other.CompareTag("FinishConverter") || other.CompareTag("Finish")) && isActive)
             Sell(other.gameObject);
@@ -52,6 +59,18 @@ public class ObjectTouch : MonoBehaviour
             enumStat++;
             StartCoroutine(ConvertObject());
             StackMechanic.Instance.ObjectConverter(gameObject, (int)enumStat);
+            yield return new WaitForSeconds(0.2f);
+            isConvert = false;
+        }
+    }
+    private IEnumerator ConvertDownObjectBool()
+    {
+        if (!isConvert)
+        {
+            isConvert = true;
+            enumStat--;
+            StartCoroutine(ConvertObject());
+            StackMechanic.Instance.ObjectConverterDown(gameObject, (int)enumStat);
             yield return new WaitForSeconds(0.2f);
             isConvert = false;
         }

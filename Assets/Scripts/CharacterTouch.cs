@@ -34,6 +34,11 @@ public class CharacterTouch : MonoBehaviour
             StackMechanic.Instance.CrashAllObjects();
         if (other.CompareTag("Finish"))
             FinishLine(other.gameObject);
+        if (other.CompareTag("DConverter"))
+        {
+            PointText.Instance.CallPointMoneyText(CharacterManager.Instance.character, 1, false);
+            StartCoroutine(ConvertDownObjectBool());
+        }
     }
 
     private void FinishLine(GameObject other)
@@ -42,6 +47,18 @@ public class CharacterTouch : MonoBehaviour
         GameManager.Instance.enumStat = GameManager.GameStat.finish;
 
     }
+    private IEnumerator ConvertDownObjectBool()
+    {
+        if (!isConvert)
+        {
+            isConvert = true;
+            enumStat--;
+            StartCoroutine(ConvertObject());
+            StackMechanic.Instance.ObjectConverterDown(gameObject, (int)enumStat);
+            yield return new WaitForSeconds(0.2f);
+            isConvert = false;
+        }
+    }
     private IEnumerator ConvertObjectBool()
     {
         if (!isConvert)
@@ -49,6 +66,7 @@ public class CharacterTouch : MonoBehaviour
             isConvert = true;
             enumStat++;
             StartCoroutine(ConvertObject());
+            PointText.Instance.CallPointMoneyText(gameObject, 1, true);
             StackMechanic.Instance.ObjectConverter(gameObject, (int)enumStat);
             yield return new WaitForSeconds(0.2f);
             isConvert = false;

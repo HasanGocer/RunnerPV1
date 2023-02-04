@@ -6,6 +6,7 @@ public class ObjectsManager : MonoSingleton<ObjectsManager>
 {
     public List<GameObject> ObjectsPotions = new List<GameObject>();
     public List<GameObject> ObjectsConverters = new List<GameObject>();
+    public List<GameObject> ObjectsPotionsConverters = new List<GameObject>();
     public List<GameObject> ObjectsPotionPos = new List<GameObject>();
     public List<GameObject> ObjectsConverterPos = new List<GameObject>();
     public GameObject potionConverterGO;
@@ -18,7 +19,10 @@ public class ObjectsManager : MonoSingleton<ObjectsManager>
         obj.SetActive(true);
         for (int i = 0; i < ObjectsConverterPos.Count; i++)
         {
-            obj = Instantiate(ObjectsConverters[Random.Range(0, ObjectsConverters.Count)], ObjectsConverterPos[i].transform.position, ObjectsConverterPos[i].transform.rotation);
+            if (Random.Range(0, 10) > 4)
+                obj = Instantiate(ObjectsConverters[Random.Range(0, ObjectsConverters.Count)], ObjectsConverterPos[i].transform.position, ObjectsConverterPos[i].transform.rotation);
+            else
+                obj = Instantiate(ObjectsPotionsConverters[Random.Range(0, ObjectsPotionsConverters.Count)], ObjectsConverterPos[i].transform.position, ObjectsConverterPos[i].transform.rotation);
             obj.SetActive(true);
         }
         for (int i = 0; i < ObjectsPotionPos.Count; i++)

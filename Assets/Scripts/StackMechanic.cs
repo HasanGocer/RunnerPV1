@@ -96,6 +96,11 @@ public class StackMechanic : MonoSingleton<StackMechanic>
         obj.transform.GetChild(enumStat - 2).gameObject.SetActive(false);
         obj.transform.GetChild(enumStat - 1).gameObject.SetActive(true);
     }
+    public void ObjectConverterDown(GameObject obj, int enumStat)
+    {
+        obj.transform.GetChild(enumStat).gameObject.SetActive(false);
+        obj.transform.GetChild(enumStat - 1).gameObject.SetActive(true);
+    }
 
     public void CrashAllObjects()
     {
