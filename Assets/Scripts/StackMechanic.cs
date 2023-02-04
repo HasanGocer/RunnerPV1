@@ -99,18 +99,25 @@ public class StackMechanic : MonoSingleton<StackMechanic>
 
     public void CrashAllObjects()
     {
-        int count = StackObjects.Count - 1;
-
-        for (int i = count; i > 0; i--)
+        if (!isCrush)
         {
-            StartCoroutine(ObjectThrow(StackObjects[i]));
-            objectMovements[i].isCrush = true;
-            objectMovements[i].stackCount = -1;
-            objectMovements[i].objectTouch.isActive = false;
-            StackObjects[i].tag = "Potion";
-            StackObjects.RemoveAt(i);
-            objectMovements.RemoveAt(i);
+            isCrush = true;
+            int count = StackObjects.Count - 1;
+
+            for (int i = count; i > 0; i--)
+            {
+                StartCoroutine(ObjectThrow(StackObjects[i]));
+                objectMovements[i].isCrush = true;
+                objectMovements[i].stackCount = -1;
+                objectMovements[i].boxCollider.isTrigger = true;
+                objectMovements[i].objectTouch.isActive = false;
+                StackObjects[i].tag = "Potion";
+                StackObjects.RemoveAt(i);
+                objectMovements.RemoveAt(i);
+            }
+            isCrush = false;
         }
+
     }
 
     private IEnumerator ObjectThrow(GameObject tempObject)
