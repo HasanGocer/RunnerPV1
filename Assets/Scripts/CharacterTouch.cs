@@ -34,7 +34,7 @@ public class CharacterTouch : MonoBehaviour
             StackMechanic.Instance.CrashAllObjects();
         if (other.CompareTag("Finish"))
             FinishLine(other.gameObject);
-        if (other.CompareTag("DConverter"))
+        if (other.CompareTag("DConverter") && enumStat > PotionStat.level1)
         {
             PointText.Instance.CallPointMoneyText(CharacterManager.Instance.character, 1, false);
             StartCoroutine(ConvertDownObjectBool());
@@ -53,7 +53,6 @@ public class CharacterTouch : MonoBehaviour
         {
             isConvert = true;
             enumStat--;
-            StartCoroutine(ConvertObject());
             StackMechanic.Instance.ObjectConverterDown(gameObject, (int)enumStat);
             yield return new WaitForSeconds(0.2f);
             isConvert = false;
@@ -65,20 +64,10 @@ public class CharacterTouch : MonoBehaviour
         {
             isConvert = true;
             enumStat++;
-            StartCoroutine(ConvertObject());
             PointText.Instance.CallPointMoneyText(gameObject, 1, true);
-            StackMechanic.Instance.ObjectConverter(gameObject, (int)enumStat);
+            StartCoroutine(StackMechanic.Instance.ObjectConverter(gameObject, (int)enumStat));
             yield return new WaitForSeconds(0.2f);
             isConvert = false;
         }
-    }
-    private IEnumerator ConvertObject()
-    {
-        Vector3 tempScale = transform.localScale;
-        transform.DOScale(transform.localScale * 1.3f, 0.2f);
-        yield return new WaitForSeconds(0.2f);
-        transform.DOScale(tempScale, 0.2f);
-        yield return new WaitForSeconds(0.2f);
-        transform.localScale = new Vector3(1, 1, 1);
     }
 }

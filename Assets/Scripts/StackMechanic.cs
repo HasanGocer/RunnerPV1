@@ -91,10 +91,20 @@ public class StackMechanic : MonoSingleton<StackMechanic>
         }
     }
 
-    public void ObjectConverter(GameObject obj, int enumStat)
+    public IEnumerator ObjectConverter(GameObject obj, int enumStat)
     {
         obj.transform.GetChild(enumStat - 2).gameObject.SetActive(false);
         obj.transform.GetChild(enumStat - 1).gameObject.SetActive(true);
+
+        for (int i = 0; i < StackObjects.Count; i++)
+        {
+            if (objectMovements[i] != null)
+            {
+                StartCoroutine(ObjectScale(StackObjects[i]));
+                yield return new WaitForSeconds(_stackDelayTime);
+            }
+            else break;
+        }
     }
     public void ObjectConverterDown(GameObject obj, int enumStat)
     {
@@ -136,7 +146,7 @@ public class StackMechanic : MonoSingleton<StackMechanic>
     }
     private IEnumerator ObjectScale(GameObject tempObject)
     {
-        tempObject.transform.DOScale(tempObject.transform.localScale * 1.1f, _scaleTime);
+        tempObject.transform.DOScale(tempObject.transform.localScale * 1.9f, _scaleTime);
         yield return new WaitForSeconds(_scaleTime);
         tempObject.transform.DOScale(new Vector3(1, 1, 1), _scaleTime);
         tempObject.transform.localScale = new Vector3(1, 1, 1);
