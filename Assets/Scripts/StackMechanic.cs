@@ -8,7 +8,7 @@ public class StackMechanic : MonoSingleton<StackMechanic>
     public List<GameObject> StackObjects = new List<GameObject>();
     public List<ObjectMovement> objectMovements = new List<ObjectMovement>();
     public float stackDistance;
-    [SerializeField] private float _stackDelayTime, _scaleTime;
+    [SerializeField] private float _stackDelayTime, _scaleTime, _scalePower;
     [SerializeField] private int _velocityMaxRange;
     bool isCrush;
     bool isJump;
@@ -27,10 +27,12 @@ public class StackMechanic : MonoSingleton<StackMechanic>
 
         if (!isJump)
         {
+            int maxCount = StackObjects.Count - 1;
             isJump = true;
-            for (int i = 0; i < StackObjects.Count; i++)
+            for (int i = maxCount; i >= 0; i--)
             {
-                if (objectMovements[i] != null)
+                if (i == maxCount - 6) isJump = false;
+                if (StackObjects[i] != null)
                 {
                     StartCoroutine(ObjectScale(StackObjects[i]));
                     yield return new WaitForSeconds(_stackDelayTime);
@@ -96,14 +98,21 @@ public class StackMechanic : MonoSingleton<StackMechanic>
         obj.transform.GetChild(enumStat - 2).gameObject.SetActive(false);
         obj.transform.GetChild(enumStat - 1).gameObject.SetActive(true);
 
-        for (int i = 0; i < StackObjects.Count; i++)
+        if (!isJump)
         {
-            if (objectMovements[i] != null)
+            int maxCount = StackObjects.Count - 1;
+            isJump = true;
+            for (int i = maxCount; i >= 0; i--)
             {
-                StartCoroutine(ObjectScale(StackObjects[i]));
-                yield return new WaitForSeconds(_stackDelayTime);
+                if (i == maxCount - 6) isJump = false;
+                if (objectMovements[i] != null)
+                {
+                    StartCoroutine(ObjectScale(StackObjects[i]));
+                    yield return new WaitForSeconds(_stackDelayTime);
+                }
+                else break;
             }
-            else break;
+            isJump = false;
         }
     }
     public void ObjectConverterDown(GameObject obj, int enumStat)
@@ -146,7 +155,7 @@ public class StackMechanic : MonoSingleton<StackMechanic>
     }
     private IEnumerator ObjectScale(GameObject tempObject)
     {
-        tempObject.transform.DOScale(tempObject.transform.localScale * 1.9f, _scaleTime);
+        tempObject.transform.DOScale(tempObject.transform.localScale * _scalePower, _scaleTime);
         yield return new WaitForSeconds(_scaleTime);
         tempObject.transform.DOScale(new Vector3(1, 1, 1), _scaleTime);
         tempObject.transform.localScale = new Vector3(1, 1, 1);

@@ -2254,6 +2254,7 @@ MonoBehaviour:
   stackDistance: 0.8
   _stackDelayTime: 0.1
   _scaleTime: 0.1
+  _scalePower: 1.74
   _velocityMaxRange: 3
 --- !u!114 &289753542
 MonoBehaviour:
