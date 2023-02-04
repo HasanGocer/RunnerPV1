@@ -120,7 +120,7 @@ Material:
     - _WobbleZ: -0.04
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _floatStep: -0.54
+    - _floatStep: -0.28
     - _freshnelPower: -0.14
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
