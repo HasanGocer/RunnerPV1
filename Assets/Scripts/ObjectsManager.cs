@@ -19,7 +19,7 @@ public class ObjectsManager : MonoSingleton<ObjectsManager>
         obj.SetActive(true);
         for (int i = 0; i < ObjectsConverterPos.Count; i++)
         {
-            if (Random.Range(0, 10) > 4)
+            if (Random.Range(0, 10) > 3)
                 obj = Instantiate(ObjectsConverters[Random.Range(0, ObjectsConverters.Count)], ObjectsConverterPos[i].transform.position, ObjectsConverterPos[i].transform.rotation);
             else
                 obj = Instantiate(ObjectsPotionsConverters[Random.Range(0, ObjectsPotionsConverters.Count)], ObjectsConverterPos[i].transform.position, ObjectsConverterPos[i].transform.rotation);
